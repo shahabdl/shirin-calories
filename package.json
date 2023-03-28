@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm app.js",
-    "dev": "nodemon app.js",
+    "dev": "nodemon --delay 100ms app.js",
     "react": "react-scripts start",
     "reactcomp": "react-scripts build"
   },
