@@ -45,6 +45,7 @@ const FoodSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   totalWeight: { type: Number, required: [true, "enter total weight of food!"] },
   foodImage: { type: String, required: [true, "please upload image for food!"] },
+  foodUnit:{type: String, required:[true,"Please Enter Food Unit"]},
   types: {
     type: Object,
     require: [true, "calculate nutrition data"],

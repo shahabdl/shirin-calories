@@ -181,7 +181,7 @@ const saveUserFood = async (req, res, next) => {
 };
 
 const updateFood = async (req, res) => {
-  const { name, ingredients, foods, foodID, totalWeight } = req.body;
+  const { name, ingredients, foods, foodID, totalWeight, foodUnit } = req.body;
   const userID = req.userData.userID;
   let createdFood;
   try {
@@ -204,13 +204,14 @@ const updateFood = async (req, res) => {
       return;
     }
     //if food doesnt exist or user is not the owner then we create new food
-    calculateNutritions(ingredients, foods, totalWeight)
+    calculateNutritions(ingredients, foods, totalWeight, foodUnit)
       .then(async (nutritions) => {
         if (nutritions.error === undefined) {
           createdFood.name = name;
           createdFood.ingredients = ingredients;
           createdFood.foods = foods;
           createdFood.totalWeight = totalWeight;
+          createdFood.foodUnit = foodUnit;
           createdFood.foodImage = "foodImage-" + req.userData.userID + "-" + name + "-" + createdFood._id;
           createdFood.types = { "User Food": { ...nutritions } };
         } else {

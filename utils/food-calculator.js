@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const ingredientModel = require("../models/ingredient-model");
 const foodModel = require("../models/food-model");
 
-async function calculateNutritions(ingredients, foods, totalWeight) {
+async function calculateNutritions(ingredients, foods, totalWeight, foodUnit) {
     let nutrition =
     {
         calories: "-",
@@ -76,7 +76,6 @@ async function calculateNutritions(ingredients, foods, totalWeight) {
                 }
             }
         }
-
         for (const foodItem of foods) {
             const foodID = foodItem.foodObj;
             let food;
@@ -94,11 +93,11 @@ async function calculateNutritions(ingredients, foods, totalWeight) {
             }
         }
 
-        if (ingredientsWeight > totalWeight) {
+        if (ingredientsWeight > totalWeight * getUnitRatioToGrams(foodUnit)) {
             throw new Error("food weight cannot be less than ingredients weight!");
         }
 
-        nutrition = objectMulti(nutrition, 100 / totalWeight);
+        nutrition = objectMulti(nutrition, 100 / (totalWeight * getUnitRatioToGrams(foodUnit)));
 
         return { ...nutrition };
     } catch (error) {
