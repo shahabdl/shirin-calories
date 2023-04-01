@@ -127,12 +127,12 @@ const createUserFood = async (req, res, next) => {
 };
 
 const saveUserFood = async (req, res, next) => {
-  const { name, ingredients, foods, totalWeight } = req.body;
+  const { name, ingredients, foods, totalWeight, foodUnit } = req.body;
   const userID = req.userData.userID;
   let createdFood;
 
   try {
-    calculateNutritions(ingredients, foods, totalWeight)
+    calculateNutritions(ingredients, foods, totalWeight, foodUnit)
       .then(async (nutritions) => {
         if (nutritions.error === undefined) {
           createdFood = new foodModel({
@@ -141,6 +141,7 @@ const saveUserFood = async (req, res, next) => {
             foods,
             owner: userID,
             totalWeight,
+            foodUnit,
             foodImage: "test",
             types: { "User Food": { ...nutritions } },
           });
